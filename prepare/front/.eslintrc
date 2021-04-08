@@ -1,0 +1,25 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",   //import export 형식
+    "ecmaFeatures": {         //내가 쓰는 특수 기능들 기재
+      "jsx": true 
+    }
+  },
+  "env": {          //어떤환경에서 돌아가는가?
+    "browser": true, 
+    "node" : true,
+    "es6": true
+  },
+  "extends": [      //실제적인 규칙!!!
+    "eslint:recommended",         //기본규칙.. 엄청 너그럽다
+    "plugin:react/recommended"    //기본규칙.. 엄청 너그럽다
+  ],
+  "plugins": [       //npm i 해줬던것들... react는 위에 기재했으니 생략!
+    "import",
+    "react-hooks"
+  ],
+  "rules": {
+
+  }
+}
