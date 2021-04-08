@@ -15,8 +15,8 @@ const AppLayout = ({children}) => {
         <Menu.Item>
           <Link href='/profile'><a>Profile</a></Link>
         </Menu.Item>
-        <Menu.Item>
-        <Search placeholder="input search text" allowClear  style={{ marginLeft:"50px", width: "30vw", verticalAlign:"middle" }} />
+        <Menu.Item style={{ marginLeft:"50px"}}>
+          <Search placeholder="input search text" allowClear  style={{ width: "30vw", verticalAlign:"middle" }} />
         </Menu.Item>
         <Menu.Item>
           <Link href='/signUp'><a>SignUp</a></Link>
