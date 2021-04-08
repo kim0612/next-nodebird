@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title>프로필 | NEXTBIRD</title>
+        <title>프로필 | NodeBird</title>
       </Head>
       <AppLayout>
         profile page!

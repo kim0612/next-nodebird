@@ -9,7 +9,7 @@ const App = ({Component, pageProps}) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>NextBird</title>
+        <title>NodeBird</title>
       </Head>
       <Component {...pageProps} />
     </>

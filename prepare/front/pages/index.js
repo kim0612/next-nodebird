@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>HOME | NEXTBIRD</title>
+        <title>HOME | NodeBird</title>
       </Head>
       <AppLayout>
           Hello next!
