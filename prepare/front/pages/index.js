@@ -10,7 +10,7 @@ const Home = () => {
         <title>HOME | NodeBird</title>
       </Head>
       <AppLayout>
-          Hello next!
+          GRID 연습
           <div>
             <Row style={{height:30,backgroundColor:"red"}}>
               a
@@ -33,7 +33,7 @@ const Home = () => {
               c
             </Row>
           </div>
-          <Divider orientation="left">Fill rest</Divider>
+          <Divider orientation="middle">HOME</Divider>
           asdf
       </AppLayout>
     </>
