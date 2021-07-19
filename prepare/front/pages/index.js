@@ -11,14 +11,19 @@ const Home = () => {
       </Head>
       <AppLayout>
           GRID 연습
-          <div>
+          <>
             <Row style={{height:30,backgroundColor:"red"}}>
               a
             </Row>
             <Row>
               <Col span={6} style={{backgroundColor:"skyblue"}}>b</Col>
               <Col span={18}>
-                <Row style={{backgroundColor:"yellow"}}>
+                <Row gutter={[0,8]}>
+                  <Col span={24} style={{backgroundColor:"yellow"}}>d</Col>
+                  <Col span={24} style={{backgroundColor:"yellowgreen"}}>e</Col>
+                  <Col span={24} style={{backgroundColor:"coral"}}>f</Col>
+                </Row>
+                {/* <Row style={{backgroundColor:"yellow"}}>
                   d
                 </Row>
                 <Row style={{backgroundColor:"yellowgreen"}}>
@@ -26,13 +31,13 @@ const Home = () => {
                 </Row>
                 <Row style={{backgroundColor:"coral"}}>
                   f
-                </Row>
+                </Row> */}
               </Col>
             </Row>
             <Row style={{height:30,backgroundColor:"green"}}>
               c
             </Row>
-          </div>
+          </>
           <Divider orientation="middle">HOME</Divider>
           asdf
       </AppLayout>
