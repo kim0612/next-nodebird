@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Head from 'next/head'
 import{ Form, Input, Button, Checkbox } from 'antd';
 
@@ -13,13 +13,39 @@ const tailLayout = {
 };
 
 const SignIn = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+
+  const [idid, setIdid] = useState("");
+  const [pwpw, setPwpw] = useState("");
   
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  const onFinish = useCallback( (values) => {
+      console.log('Success:', values);
+      // setIdid(values.username);
+      // setPwpw(values.password);
+      // console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
+    },
+    [],
+  );
+
+  const onFinishFailed = useCallback( (errorInfo) => {
+      console.log('Failed:', errorInfo);
+    },
+    [],
+  );
+
+  const onChangeIdid = useCallback( (e) => {
+      setIdid(e.target.value);
+      console.log(idid);
+    },
+    [],
+  );
+
+  const onChangePwpw = useCallback( (e) => {
+    setPwpw(e.target.value);
+    console.log(pwpw);
+  },
+  [],
+);
+
   return(
     <>
       <Head>
@@ -39,7 +65,7 @@ const SignIn = () => {
             name="username"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
-            <Input />
+            <Input onChange={onChangeIdid}/>
           </Form.Item>
 
           <Form.Item
@@ -47,7 +73,7 @@ const SignIn = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password />
+            <Input.Password onChange={onChangePwpw}/>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
