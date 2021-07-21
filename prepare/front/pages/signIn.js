@@ -13,7 +13,6 @@ const tailLayout = {
 };
 
 const SignIn = () => {
-
   const [idid, setIdid] = useState("");
   const [pwpw, setPwpw] = useState("");
   
@@ -21,37 +20,29 @@ const SignIn = () => {
       console.log('Success:', values);
       // setIdid(values.username);
       // setPwpw(values.password);
-      // console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
-    },
-    [],
-  );
+      console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
+    }, [idid, pwpw]);
 
   const onFinishFailed = useCallback( (errorInfo) => {
       console.log('Failed:', errorInfo);
-    },
-    [],
-  );
+    }, []);
 
   const onChangeIdid = useCallback( (e) => {
       setIdid(e.target.value);
       console.log(idid);
-    },
-    [],
-  );
+    }, [idid]);
 
   const onChangePwpw = useCallback( (e) => {
     setPwpw(e.target.value);
     console.log(pwpw);
-  },
-  [],
-);
+  }, [pwpw]);
 
   return(
     <>
       <Head>
         <title>로그인 | NodeBird</title>
       </Head>
-      <AppLayout>
+      <AppLayout >
 
         <Form
           {...layout}

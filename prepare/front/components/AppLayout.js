@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { Menu, Input, Dropdown } from 'antd';
 import Image from 'next/image';
 
+import {TwitterOutlined} from '@ant-design/icons';
+
 const { Search } = Input
 
 const menu = (
@@ -31,7 +33,11 @@ const AppLayout = ({children}) => {
     <>
       <Menu mode="horizontal">
         <Menu.Item>
-          <Link href='/'><a style={{fontSize:"2vw"}}>HOME</a></Link>
+          <Link href='/'>
+            <a style={{fontSize:"2vw"}}>
+              <TwitterOutlined style={{fontSize: '21px', width:'40px', paddingLeft:'10px'}} />
+            </a>
+          </Link>
         </Menu.Item>
         <Menu.Item>
           <Link href='/profile'><a style={{fontSize:"2vw"}}>Profile</a></Link>
@@ -40,7 +46,7 @@ const AppLayout = ({children}) => {
           <Search placeholder="input search text" allowClear  style={{ width: "25vw", verticalAlign:"middle" }} />
         </Menu.Item>
 
-        {isLoggedin 
+        {isLoggedin
           ? 
             <Menu.Item style={{ marginLeft:"20vw"}}>
               <div style={{height:"46px"}}>
