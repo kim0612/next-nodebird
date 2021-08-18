@@ -8,7 +8,7 @@ import {TwitterOutlined} from '@ant-design/icons';
 
 const { Search } = Input
 
-const menu = (
+const dropDownMenu = (
   <Menu>
     <Menu.Item key="0">
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
@@ -28,7 +28,7 @@ const menu = (
 );
 
 const AppLayout = ({children}) => {
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(true);
   return (
     <>
       <Menu mode="horizontal">
@@ -50,7 +50,7 @@ const AppLayout = ({children}) => {
           ? 
             <Menu.Item style={{ marginLeft:"20vw"}}>
               <div style={{height:"46px"}}>
-                <Dropdown overlay={menu}>
+                <Dropdown overlay={dropDownMenu}>
                   <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <Image src="/img/groot2.jpg" alt="profileImg" width="44" height="44" />
                   </a>
