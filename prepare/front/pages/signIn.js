@@ -5,7 +5,7 @@ import{ Form, Input, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import AppLayout from '../components/appLayout';
-import { loginAction } from '../reducers';
+import { loginAction } from '../reducers/user';
 
 const layout = {
   labelCol: { span: 8 },

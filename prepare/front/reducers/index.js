@@ -1,57 +1,24 @@
 import { HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "redux";
 
-//액션타입 정의
-const LOG_IN = "LOG_IN";
-const LOG_OUT = "LOG_OUT";
-
-//action creator
-export const loginAction = (data) => {
-  return {
-    type : LOG_IN,
-    data
-  }
-}
-export const logoutAction = {
-  type : LOG_OUT
-}
+//쪼개진 reducer들 불러오기
+import user from './user';
+import post from './post';
 
 
-//state 초기화
-const initialState = {
-  user : {
-    isLoggedin : false,
-    user : null,
+//rootReducer 생성 및 배포
+const rootReducer = combineReducers({
+  index : (state={}, action) => {
+    switch(action.type){
+      case HYDRATE:
+        console.log("HYDRATE",action)
+        return {...state, ...action.payload}
+      default:
+        console.log("index rootReducer 초기화 or !!해당 액션이 rootReducer에 존재하지 않음!!");
+        return state;
+    }
   },
-};
-
-
-//reducer 생성
-const reducer = (state = initialState, action) => {
-  switch(action.type){
-    case HYDRATE:
-      console.log("HYDRATE",action)
-      return {...state, ...action.payload}
-    case LOG_IN:
-      return {
-        ...state,
-        user : {
-          ...state.user,
-          isLoggedin : true,
-          user : action.data
-        }
-      }
-    case LOG_OUT:
-      return {
-        ...state,
-        user : {
-          ...state.user,
-          isLoggedin : false,
-          user : null
-        }
-      }
-    default:
-      console.log("해당 액션이 reducer에 존재하지 않음!");
-      return state;
-  }
-}
-export default reducer;
+  user,
+  post
+})
+export default rootReducer;

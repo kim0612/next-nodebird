@@ -6,7 +6,7 @@ import { Menu, Input, Dropdown } from 'antd';
 import {TwitterOutlined} from '@ant-design/icons';
 import {useSelector, useDispatch} from "react-redux"
 
-import { logoutAction } from '../reducers';
+import { logoutAction } from '../reducers/user';
 
 const { Search } = Input
 
