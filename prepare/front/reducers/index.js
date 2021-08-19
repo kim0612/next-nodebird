@@ -1,3 +1,4 @@
+import { HYDRATE } from "next-redux-wrapper";
 
 //액션타입 정의
 const LOG_IN = "LOG_IN";
@@ -27,6 +28,9 @@ const initialState = {
 //reducer 생성
 const reducer = (state = initialState, action) => {
   switch(action.type){
+    case HYDRATE:
+      console.log("HYDRATE",action)
+      return {...state, ...action.payload}
     case LOG_IN:
       return {
         ...state,
