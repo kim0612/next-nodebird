@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import Head from 'next/head'
-import{ Form, Input, Button, Checkbox } from 'antd';
+import { useRouter } from 'next/router';
+import{ Form, Input, Button } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import AppLayout from '../components/appLayout';
+import { loginAction } from '../reducers';
 
 const layout = {
   labelCol: { span: 8 },
@@ -13,14 +16,16 @@ const tailLayout = {
 };
 
 const SignIn = () => {
+  const router = useRouter();
   const [idid, setIdid] = useState("");
   const [pwpw, setPwpw] = useState("");
+  const dispatch = useDispatch();
   
   const onFinish = useCallback( (values) => {
       console.log('Success:', values);
-      // setIdid(values.username);
-      // setPwpw(values.password);
       console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
+      dispatch(loginAction({idid,pwpw}));
+      router.push("/");
     }, [idid, pwpw]);
 
   const onFinishFailed = useCallback( (errorInfo) => {

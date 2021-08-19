@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link'
-import { Menu, Input, Dropdown } from 'antd';
 import Image from 'next/image';
-
+import { Menu, Input, Dropdown } from 'antd';
 import {TwitterOutlined} from '@ant-design/icons';
+import {useSelector, useDispatch} from "react-redux"
+
+import { logoutAction } from '../reducers';
 
 const { Search } = Input
 
-const dropDownMenu = (
+const dropDownMenu = (dispatch)=>{return (
   <Menu>
     <Menu.Item key="0">
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
@@ -21,14 +23,15 @@ const dropDownMenu = (
       </a>
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="3" disabled>
-      3rd menu item（disabled）
+    <Menu.Item key="3">
+      <a href="/" onClick={(e)=>{e.preventDefault(); dispatch(logoutAction)}}>LOG OUT</a>
     </Menu.Item>
   </Menu>
-);
+);}
 
 const AppLayout = ({children}) => {
-  const [isLoggedin, setIsLoggedin] = useState(true);
+  const isLoggedin = useSelector((state)=>state.user.isLoggedin);
+  const dispatch = useDispatch();
   return (
     <>
       <Menu mode="horizontal">
@@ -50,7 +53,7 @@ const AppLayout = ({children}) => {
           ? 
             <Menu.Item style={{ marginLeft:"20vw"}}>
               <div style={{height:"46px"}}>
-                <Dropdown overlay={dropDownMenu}>
+                <Dropdown overlay={dropDownMenu(dispatch)}>
                   <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     <Image src="/img/groot2.jpg" alt="profileImg" width="44" height="44" />
                   </a>
@@ -73,9 +76,7 @@ const AppLayout = ({children}) => {
     </>
   );
 };
-
 AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 export default AppLayout;
