@@ -15,7 +15,7 @@ const Home = () => {
             <Row style={{height:30,backgroundColor:"red"}}>
               a
             </Row>
-            <Row>
+            <Row style={{margin:"10px 0"}}>
               <Col span={6} style={{backgroundColor:"skyblue"}}>b</Col>
               <Col span={18}>
                 <Row gutter={[0,8]}>

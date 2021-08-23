@@ -1,3 +1,21 @@
+const dummyUser = {
+  id: 1,
+  nickname: '제로초',
+  Posts: [],
+  Followings: [{nickname:"김재호"}, {nickname:"장종구"},{nickname:"이동민"}],
+  Followers: [{nickname:"김재호"}, {nickname:"장종구"},{nickname:"이동민"}],
+};
+
+// state 초기화
+const initialState = {
+  isLoggedin : false,
+  user : null,
+  signUpData : {},
+  logInData : {}
+}
+
+
+
 //액션타입 변수명으로 정의
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
@@ -13,12 +31,6 @@ export const logoutAction = {
   type : LOG_OUT
 }
 
-// state 초기화
-const initialState = {
-  isLoggedin : false,
-  user : null,
-}
-
 //reducer 생성 및 배포
 const reducer = (state = initialState, action) => {
   switch(action.type){
@@ -26,13 +38,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedin : true,
-        user : action.data
+        user : dummyUser,
+        logInData : action.data
       }
     case LOG_OUT:
       return {
         ...state,
         isLoggedin : false,
-        user : null
+        user : null,
+        logInData : {}
       }
     default:
       console.log("user reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
