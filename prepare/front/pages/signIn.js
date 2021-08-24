@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import AppLayout from '../components/appLayout';
 import { loginAction } from '../reducers/user';
+import useInput from '../hooks/useInput';
 
 const layout = {
   labelCol: { span: 8 },
@@ -17,13 +18,27 @@ const tailLayout = {
 
 const SignIn = () => {
   const router = useRouter();
-  const [idid, setIdid] = useState("");
-  const [pwpw, setPwpw] = useState("");
   const dispatch = useDispatch();
+
+  const [idid, onChangeIdid] = useInput("");
+  const [pwpw, onChangePwpw] = useInput("");
+/*
+  const [idid, setIdid] = useState("");
+  const onChangeIdid = useCallback( (e) => {
+    setIdid(e.target.value);
+    console.log(idid);
+  }, [idid]);
   
+  const [pwpw, setPwpw] = useState("");
+  const onChangePwpw = useCallback( (e) => {
+    setPwpw(e.target.value);
+    console.log(pwpw);
+  }, [pwpw]);
+*/
+
   const onFinish = useCallback( (values) => {
-      console.log('Success:', values);
-      console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
+    console.log('Success:', values);
+    console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
       dispatch(loginAction({idid,pwpw}));
       router.push("/");
     }, [idid, pwpw]);
@@ -32,15 +47,6 @@ const SignIn = () => {
       console.log('Failed:', errorInfo);
     }, []);
 
-  const onChangeIdid = useCallback( (e) => {
-      setIdid(e.target.value);
-      console.log(idid);
-    }, [idid]);
-
-  const onChangePwpw = useCallback( (e) => {
-    setPwpw(e.target.value);
-    console.log(pwpw);
-  }, [pwpw]);
 
   return(
     <>

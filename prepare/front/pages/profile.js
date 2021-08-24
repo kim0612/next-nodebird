@@ -9,7 +9,6 @@ import FollowList from '../components/FollowList';
 const Profile = () => {
   console.log("profile 페이지 들어갑니다잉");
   let user = useSelector((state)=>state.user);
-  let hi = 0;
   // let followerList;
   // let followingList
   // if(isLoggedin){
@@ -19,11 +18,8 @@ const Profile = () => {
   console.log(user);
 
   useEffect(()=>{
-    hi= 1;
     console.log("로그인했나?",user.isLoggedin);
   },[user.isLoggedin])
-
-  console.log(hi);
   
   return (
     <>

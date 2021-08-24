@@ -5,18 +5,22 @@ import { useSelector } from 'react-redux';
 import { Checkbox, Form, Input, Button, Divider } from 'antd';
 
 import AppLayout from '../components/appLayout';
+import useInput from '../hooks/useInput';
 
 const SignUp = () => {
   const isLoggedin = useSelector(state=>state.user.isLoggedin);
   const router = useRouter();
 
-  const [isAgree, setIsAgree] = useState(false);
-
+  const [id, idHandler] = useInput("");
+  const [passWord, passWordHandler] = useInput("");
+  const [passWord2, passWordHandler2] = useInput("");
+  const [nickName, nickNameHandler] = useInput("");
+  /*
   const [id, setId] = useState("");
   const [passWord, setPassWord] = useState("");
   const [passWord2, setPassWord2] = useState("");
   const [nickName, setNickName] = useState("");
-
+  
   const idHandler = (e)=>{
     setId(e.target.value);
   };
@@ -29,20 +33,23 @@ const SignUp = () => {
   const nickNameHandler = (e)=>{
     setNickName(e.target.value);
   };
+*/
 
-  const submitHandler = () => {
-    if(passWord2===passWord && id && passWord && nickName && isAgree){
-      console.log(`회원가입데이터 => id:${id}, nickName:${nickName}, passWord:${passWord}`);
+ const [isAgree, setIsAgree] = useState(false);
+ 
+ const submitHandler = () => {
+   if(passWord2===passWord && id && passWord && nickName && isAgree){
+     console.log(`회원가입데이터 => id:${id}, nickName:${nickName}, passWord:${passWord}`);
     }else{
       console.log("불가");
     }
-  }
+  };
 
   useEffect(()=>{
     if(isLoggedin){
       router.push("/profile");
     }
-  }, [isLoggedin])
+  }, [isLoggedin]);
 
   return (
     <>
@@ -74,7 +81,8 @@ const SignUp = () => {
               size='small' 
               type="primary" 
               htmlType="submit" 
-              disabled={!(passWord2===passWord && id && passWord && nickName && isAgree)}>
+              disabled={!(passWord2===passWord && id && passWord && nickName && isAgree)}
+            >
               Submit
             </Button>
           </div>
