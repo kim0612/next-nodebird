@@ -14,13 +14,11 @@ const initialState = {
   logInData : {}
 }
 
-
-
-//액션타입 변수명으로 정의
+// action type 변수명으로 정의
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 
-//action creator 생성 및 배포
+//(action) or (action creator) 생성 및 배포
 export const loginAction = (data) => {
   return {
     type : LOG_IN,

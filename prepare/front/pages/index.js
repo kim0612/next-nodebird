@@ -2,15 +2,20 @@ import React from 'react';
 import AppLayout from '../components/appLayout';
 import Head from 'next/head';
 import {Row, Col, Divider} from 'antd'
+import { useSelector } from 'react-redux';
+
+import PostForm from '../components/PostForm';
 
 const Home = () => {
+  const isLoggedin = useSelector((state)=>state.user.isLoggedin);
+  const post = useSelector((state)=>state.post);
   return (
     <>
       <Head>
         <title>HOME | NodeBird</title>
       </Head>
       <AppLayout>
-          GRID 연습
+          <Divider>ANTD GRID 연습</Divider>
           <>
             <Row style={{height:30,backgroundColor:"red"}}>
               a
@@ -38,8 +43,9 @@ const Home = () => {
               c
             </Row>
           </>
-          <Divider orientation="middle">HOME</Divider>
-          asdf
+          <Divider>HOME</Divider>
+            {isLoggedin && <PostForm/>}
+            {console.log(post.mainPosts)}
       </AppLayout>
     </>
   );
