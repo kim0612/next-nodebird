@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import useInput from "../hooks/useInput";
 
 const ProfileEditForm = () => {
-  const nickname = useSelector((state)=>state.user.user.nickname);
+  const nickname = useSelector((state)=>state.user.me.nickname);
   
   const [changeNickname, changeNicknameHandler] = useInput(nickname);
   // const [changeNickname, setChangeNickname] = useState(nickname);

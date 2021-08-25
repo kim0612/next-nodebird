@@ -31,8 +31,8 @@ const Profile = () => {
         ?
           <>
             <ProfileEditForm/>
-            <FollowList header="Follower List" data={user.user.Followers}/>
-            <FollowList header="Following List" data={user.user.Followings}/>
+            <FollowList header="Follower List" data={user.me.Followers}/>
+            <FollowList header="Following List" data={user.me.Followings}/>
           </>
         :
           <div>pls login</div>

@@ -9,7 +9,7 @@ const dummyUser = {
 // state 초기화
 const initialState = {
   isLoggedin : false,
-  user : null,
+  me : null,
   signUpData : {},
   logInData : {}
 }
@@ -38,14 +38,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedin : true,
-        user : dummyUser,
+        me : dummyUser,
         logInData : action.data
       }
     case LOG_OUT:
       return {
         ...state,
         isLoggedin : false,
-        user : null,
+        me : null,
         logInData : {}
       }
     default:
