@@ -5,6 +5,7 @@ import {Row, Col, Divider} from 'antd'
 import { useSelector } from 'react-redux';
 
 import PostForm from '../components/PostForm';
+import PostCard from '../components/PostCard';
 
 const Home = () => {
   const isLoggedin = useSelector((state)=>state.user.isLoggedin);
@@ -46,6 +47,9 @@ const Home = () => {
           <Divider>HOME</Divider>
             {isLoggedin && <PostForm/>}
             {console.log(post.mainPosts)}
+            {<PostCard post={post}/>}
+          asdfasdg
+          
       </AppLayout>
     </>
   );
