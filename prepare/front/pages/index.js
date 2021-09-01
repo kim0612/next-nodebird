@@ -10,6 +10,7 @@ import PostCard from '../components/PostCard';
 const Home = () => {
   const isLoggedin = useSelector((state)=>state.user.isLoggedin);
   const post = useSelector((state)=>state.post);
+  const mainPosts = post.mainPosts;
   return (
     <>
       <Head>
@@ -46,10 +47,9 @@ const Home = () => {
           </>
           <Divider>HOME</Divider>
             {isLoggedin && <PostForm/>}
-            {console.log(post.mainPosts)}
-            {<PostCard post={post}/>}
-          asdfasdg
-          
+            {mainPosts.map((item,index)=>{
+              return <PostCard key={item.id} item={item} post={post}/>
+            })}
       </AppLayout>
     </>
   );

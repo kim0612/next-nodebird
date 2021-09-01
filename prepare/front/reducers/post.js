@@ -2,8 +2,8 @@ const dummyPost = {
   id: 2,
   content: '더미데이터입니다.',
   User: {
-    id: 1,
-    nickname: '제로초',
+    id: 2,
+    nickname: 'KIM',
   },
   Images: [],
   Comments: [],
@@ -52,15 +52,14 @@ export const addPostAction = {
 // reducer 생성 및 배포
 const reducer = (state=initialState, action) => {
   switch(action.type){
-    case ADD_POST:
-      let newState = {
+    case ADD_POST: 
+      return {
         ...state,
         mainPosts : [
           dummyPost,
           ...state.mainPosts
         ]
-      }
-      return newState;
+      };
     default:
       console.log("post reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
       return state;
