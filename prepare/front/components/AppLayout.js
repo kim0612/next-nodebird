@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link'
 import Image from 'next/image';
-import { Menu, Input, Dropdown, Button } from 'antd';
+import { Menu, Input, Dropdown } from 'antd';
 import {TwitterOutlined} from '@ant-design/icons';
 import {useSelector, useDispatch} from "react-redux"
 
@@ -23,7 +23,7 @@ const dropDownMenu = (dispatch,router)=>{return (
         2nd menu item
       </a>
     </Menu.Item>
-    <Menu.Divider />
+    <Menu.Divider key="2"/>
     <Menu.Item key="3">
       <button onClick={()=>{router.push("/"); dispatch(logoutAction)}}>LOG OUT</button>
     </Menu.Item>
@@ -50,17 +50,17 @@ const AppLayout = ({children}) => {
 
         {isLoggedin
           ? 
-          <>
-            <Menu.Item style={{ marginLeft:"20vw"}}>
-              <div style={{height:"46px"}}>
-                <Dropdown overlay={dropDownMenu(dispatch,router)}>
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    <Image src="/img/groot2.jpg" alt="profileImg" width="44" height="44" />
-                  </a>
-                </Dropdown>
-              </div>
-            </Menu.Item>
-          </>
+            <>
+              <Menu.Item style={{ marginLeft:"20vw"}}>
+                <div style={{height:"46px"}}>
+                  <Dropdown overlay={dropDownMenu(dispatch,router)}>
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                      <Image src="/img/groot2.jpg" alt="profileImg" width="44" height="44" />
+                    </a>
+                  </Dropdown>
+                </div>
+              </Menu.Item>
+            </>
           :
             <>
               <Menu.Item>
