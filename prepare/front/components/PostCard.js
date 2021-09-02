@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import PostCardComment from "./PostCardComment";
 
-const PostCard = ({post, item}) => {
+const PostCard = ({post}) => {
   const me = useSelector((state)=>state.user.me);
   const [heart,setHeart] = useState(false);
   const onToggleHeart = () => {
@@ -22,30 +22,29 @@ const PostCard = ({post, item}) => {
     <>
       <Card
         style={{margin:"10px 40px"}}
-        cover={item.Images.length === 0 ? <></> : <img style={{margin:"20px", width:"30vw"}} alt="img1" src={item.Images[0].src}></img>}
+        cover={post.Images.length === 0 ? <></> : <img style={{margin:"20px", width:"30vw"}} alt="img1" src={post.Images[0].src}></img>}
         actions={[
           <RetweetOutlined key="retweet"/>,
           (heart) ? <HeartTwoTone twoToneColor="#eb2f96" key="heart2" onClick={onToggleHeart}/> : <HeartOutlined key="heart1" onClick={onToggleHeart}/>,
           <CommentOutlined key="comment" onClick={onToggleCommentOn}/>,
-          <Popover key="popover" content={(me && me.id===item.User.id && me.nickname===item.User.nickname)?popOverContent1:popOverContent2}>
+          <Popover key="popover" content={(me && me.id===post.User.id && me.nickname===post.User.nickname)?popOverContent1:popOverContent2}>
             <EllipsisOutlined />
           </Popover>
         ]}
       >
         <Card.Meta
-          avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
-          title={item.User.nickname}
-          description={item.content}
+          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
+          title={post.User.nickname}
+          description={post.content}
         />
       </Card>
-      {commentON && <PostCardComment/>}
+      {commentON && <PostCardComment post={post}/>}
     </>
   )
 }
 
 PostCard.propTypes={
-  post: PropTypes.object.isRequired,
-  item: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired
 };
 
 export default PostCard;

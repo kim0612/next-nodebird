@@ -47,8 +47,8 @@ const Home = () => {
           </>
           <Divider>HOME</Divider>
             {isLoggedin && <PostForm/>}
-            {mainPosts.map((item,index)=>{
-              return <PostCard key={item.id} item={item} post={post}/>
+            {mainPosts.map((post)=>{
+              return <PostCard key={post.id} post={post}/>
             })}
       </AppLayout>
     </>

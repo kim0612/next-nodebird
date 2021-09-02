@@ -43,6 +43,7 @@ const initialState = {
 
 // action type 변수명으로 정의
 const ADD_POST = "ADD_POST";
+const ADD_COMMENT = "ADD_COMMENT"
 
 // (action) or (action Creator) 생성 및 배포
 export const addPostAction = {
@@ -60,6 +61,11 @@ const reducer = (state=initialState, action) => {
           ...state.mainPosts
         ]
       };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        
+      }
     default:
       console.log("post reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
       return state;
