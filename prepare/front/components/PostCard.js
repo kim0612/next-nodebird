@@ -5,6 +5,7 @@ import { RetweetOutlined, HeartOutlined, HeartTwoTone, CommentOutlined,EllipsisO
 import { useSelector } from "react-redux";
 
 import PostCardComment from "./PostCardComment";
+import PostCardImage from "./PostCardImage";
 
 const PostCard = ({post}) => {
   const me = useSelector((state)=>state.user.me);
@@ -22,7 +23,7 @@ const PostCard = ({post}) => {
     <>
       <Card
         style={{margin:"10px 40px"}}
-        cover={post.Images.length === 0 ? <></> : <img style={{margin:"20px", width:"30vw"}} alt="img1" src={post.Images[0].src}></img>}
+        cover={post.Images.length === 0 ? <></> : <PostCardImage images={post.Images}/>}
         actions={[
           <RetweetOutlined key="retweet"/>,
           (heart) ? <HeartTwoTone twoToneColor="#eb2f96" key="heart2" onClick={onToggleHeart}/> : <HeartOutlined key="heart1" onClick={onToggleHeart}/>,
