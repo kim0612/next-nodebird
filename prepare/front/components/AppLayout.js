@@ -6,7 +6,7 @@ import { Menu, Input, Dropdown } from 'antd';
 import {TwitterOutlined} from '@ant-design/icons';
 import {useSelector, useDispatch} from "react-redux"
 
-import { logoutAction } from '../reducers/user';
+import { logoutRequestAction } from '../reducers/user';
 import { useRouter } from 'next/dist/client/router';
 
 const { Search } = Input
@@ -25,7 +25,7 @@ const dropDownMenu = (dispatch,router)=>{return (
     </Menu.Item>
     <Menu.Divider key="2"/>
     <Menu.Item key="3">
-      <button onClick={()=>{router.push("/"); dispatch(logoutAction)}}>LOG OUT</button>
+      <button onClick={()=>{router.push("/"); dispatch(logoutRequestAction)}}>LOG OUT</button>
     </Menu.Item>
   </Menu>
 );}

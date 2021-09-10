@@ -5,7 +5,7 @@ import{ Form, Input, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 
 import AppLayout from '../components/appLayout';
-import { loginAction } from '../reducers/user';
+import { loginRequestAction } from '../reducers/user';
 import useInput from '../hooks/useInput';
 
 const layout = {
@@ -39,7 +39,7 @@ const SignIn = () => {
   const onFinish = useCallback( (values) => {
     console.log('Success:', values);
     console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
-      dispatch(loginAction({idid,pwpw}));
+      dispatch(loginRequestAction({idid,pwpw}));
       router.push("/");
     }, [idid, pwpw]);
 

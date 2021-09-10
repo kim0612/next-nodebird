@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { Button, Form, Input } from "antd"
 import { useDispatch } from "react-redux";
 
-import { addPostAction } from "../reducers/post";
+import { addPostRequestAction } from "../reducers/post";
 
 const PostForm = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const PostForm = () => {
   },[fileUpload.current])
   const submitHandler = useCallback(()=>{
     console.log("submit!");
-    dispatch(addPostAction);
+    dispatch(addPostRequestAction);
     setContent("");
   },[]);
 
