@@ -23,15 +23,18 @@ function* logIn(action) {
   try {
     // const result = yield call(logInAPI, action.data);
     yield delay(2000);
+    // throw new Error("임시에러!");
     yield put({
       type : LOG_IN_SUCCESS,
       // data : result.data,
+      data : action.data,
     });
   }
   catch(err) {
     yield put({
       type : LOG_IN_FAILURE,
-      data : err.response.data,
+      // error : err.response.data,
+      error : err,
     });
   }
 };

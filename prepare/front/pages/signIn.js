@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import{ Form, Input, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppLayout from '../components/appLayout';
 import { loginRequestAction } from '../reducers/user';
@@ -19,29 +19,23 @@ const tailLayout = {
 const SignIn = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { loginLoading, isLoggedin } = useSelector((state)=>state.user);
 
-  const [idid, onChangeIdid] = useInput("");
-  const [pwpw, onChangePwpw] = useInput("");
-/*
-  const [idid, setIdid] = useState("");
-  const onChangeIdid = useCallback( (e) => {
-    setIdid(e.target.value);
-    console.log(idid);
-  }, [idid]);
-  
-  const [pwpw, setPwpw] = useState("");
-  const onChangePwpw = useCallback( (e) => {
-    setPwpw(e.target.value);
-    console.log(pwpw);
-  }, [pwpw]);
-*/
+  useEffect(()=>{
+    if(!loginLoading && isLoggedin){
+      router.push('/');
+    };
+  }, [loginLoading, isLoggedin]);
+
+  const [email, onChangeEmail] = useInput("");
+  const [pw, onChangePw] = useInput("");
+
 
   const onFinish = useCallback( (values) => {
-    console.log('Success:', values);
-    console.log(`state 값 : \n idid= "${idid}"  pwpw="${pwpw}"`);
-      dispatch(loginRequestAction({idid,pwpw}));
-      router.push("/");
-    }, [idid, pwpw]);
+      console.log('Success:', values);
+      console.log(`state 값 : \n email= "${email}"  pw="${pw}"`);
+      dispatch(loginRequestAction({email,pw}));
+    }, [email, pw]);
 
   const onFinishFailed = useCallback( (errorInfo) => {
       console.log('Failed:', errorInfo);
@@ -67,7 +61,7 @@ const SignIn = () => {
             name="username"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
-            <Input onChange={onChangeIdid}/>
+            <Input onChange={onChangeEmail}/>
           </Form.Item>
 
           <Form.Item
@@ -75,11 +69,11 @@ const SignIn = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password onChange={onChangePwpw}/>
+            <Input.Password onChange={onChangePw}/>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loginLoading}>
               Sign In
             </Button>
           </Form.Item>

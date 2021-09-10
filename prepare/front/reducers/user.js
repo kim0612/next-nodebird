@@ -8,11 +8,13 @@ const dummyUser = {
 
 // state 초기화
 const initialState = {
+  loginLoading : false,
+  logoutLoading : false,
   isLoggedin : false,
   me : null,
   signUpData : {},
-  logInData : {}
-}
+  logInData : {},
+};
 
 // action type 변수명으로 정의
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -45,34 +47,41 @@ const reducer = (state = initialState, action) => {
     case LOG_IN_REQUEST:
       return {
         ...state,
-        isLoggedin : true,
-        me : dummyUser,
-        logInData : action.data
-      }
+        loginLoading : true,
+      };
     case LOG_IN_SUCCESS:
       return {
         ...state,
-      }
+        loginLoading : false,
+        isLoggedin : true,
+        me : dummyUser,
+        logInData : action.data,
+      };
     case LOG_IN_FAILURE:
+      console.log(action.error);
       return {
         ...state,
-      }
+        loginLoading : false,
+      };
     // LOG_OUT
     case LOG_OUT_REQUEST:
       return {
         ...state,
-        isLoggedin : false,
-        me : null,
-        logInData : {}
-      }
+        logoutLoading : true,
+      };
     case LOG_OUT_SUCCESS:
       return {
         ...state,
-      }
+        logoutLoading : false,
+        isLoggedin : false,
+        me : null,
+        logInData : {},
+      };
     case LOG_OUT_FAILURE:
       return {
         ...state,
-      }
+        logoutLoading : false,
+      };
     // SIGN_UP
     case SIGN_UP_REQUEST:
       return{
