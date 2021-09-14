@@ -1,55 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, Form, Input, Button, Divider } from 'antd';
 
 import AppLayout from '../components/appLayout';
 import useInput from '../hooks/useInput';
+import { signupRequestAction } from '../reducers/user';
 
 const SignUp = () => {
-  const isLoggedin = useSelector(state=>state.user.isLoggedin);
+  const { signUpData, signupLoading } = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  const [id, idHandler] = useInput("");
+  const [email, emailHandler] = useInput("");
   const [passWord, passWordHandler] = useInput("");
   const [passWord2, passWordHandler2] = useInput("");
   const [nickName, nickNameHandler] = useInput("");
-  /*
-  const [id, setId] = useState("");
-  const [passWord, setPassWord] = useState("");
-  const [passWord2, setPassWord2] = useState("");
-  const [nickName, setNickName] = useState("");
   
-  const idHandler = (e)=>{
-    setId(e.target.value);
-  };
-  const passWordHandler = (e)=>{
-    setPassWord(e.target.value);
-  };
-  const passWordHandler2 = (e)=>{
-    setPassWord2(e.target.value);
-  };
-  const nickNameHandler = (e)=>{
-    setNickName(e.target.value);
-  };
-*/
-
- const [isAgree, setIsAgree] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
  
- const submitHandler = () => {
-   if(passWord2===passWord && id && passWord && nickName && isAgree){
-     console.log(`회원가입데이터 => id:${id}, nickName:${nickName}, passWord:${passWord}`);
-    }else{
-      console.log("불가");
+  const submitHandler = useCallback( () => {
+    if (passWord2===passWord && email && passWord && nickName && isAgree) {
+      console.log(`회원가입데이터 => email:${email}, nickName:${nickName}, passWord:${passWord}`);
+      dispatch(signupRequestAction({email, passWord, nickName}));
     }
-  };
+    else {
+      console.log("!!불가!!");
+    }
+  }, [email, passWord, passWord2, nickName, isAgree]);
 
   useEffect(()=>{
-    if(isLoggedin){
-      router.push("/profile");
+    if(signUpData){
+      router.push("/signIn");
     }
-  }, [isLoggedin]);
+  }, [signUpData]);
 
   return (
     <>
@@ -59,8 +44,8 @@ const SignUp = () => {
       <AppLayout>
         <Divider>회원가입</Divider>
         <Form labelCol={{span:7}} wrapperCol={{span:10}} onFinish={submitHandler}>
-          <Form.Item label="ID">
-            <Input value={id} onChange={idHandler}/>
+          <Form.Item label="EMAIL">
+            <Input value={email} onChange={emailHandler}/>
           </Form.Item>
           <Form.Item label="닉네임">
             <Input value={nickName} onChange={nickNameHandler}/>
@@ -81,7 +66,8 @@ const SignUp = () => {
               size='small' 
               type="primary" 
               htmlType="submit" 
-              disabled={!(passWord2===passWord && id && passWord && nickName && isAgree)}
+              disabled={!(passWord2===passWord && email && passWord && nickName && isAgree)}
+              loading = {signupLoading}
             >
               Submit
             </Button>

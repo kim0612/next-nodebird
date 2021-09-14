@@ -10,9 +10,10 @@ const dummyUser = {
 const initialState = {
   loginLoading : false,
   logoutLoading : false,
+  signupLoading : false,
   isLoggedin : false,
   me : null,
-  signUpData : {},
+  signUpData : null,
   logInData : {},
 };
 
@@ -37,6 +38,12 @@ export const loginRequestAction = (data) => {
 }
 export const logoutRequestAction = {
   type : LOG_OUT_REQUEST
+}
+export const signupRequestAction = (data) => {
+  return {
+    type : SIGN_UP_REQUEST,
+    data
+  }
 }
 
 
@@ -86,15 +93,20 @@ const reducer = (state = initialState, action) => {
     case SIGN_UP_REQUEST:
       return{
         ...state,
-      }
+        signupLoading : true,
+      };
     case SIGN_UP_SUCCESS:
       return{
         ...state,
-      }
+        signupLoading : false,
+        signUpData : action.data,
+      };
     case SIGN_UP_FAILURE:
+      console.log(action.error);
       return{
         ...state,
-      }
+        signupLoading : false,
+      };
     // default
     default:
       console.log("user reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
