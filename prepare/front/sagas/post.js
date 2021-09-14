@@ -12,7 +12,7 @@ function addPostAPI(data) {
   return axios.post('/api/post', data);
 };
 function addCommentAPI(data) {
-  return axios.post('/api/post/comment', data);
+  return axios.post(`/api/post/${data.postId}/comment`, data);
 };
 
 
@@ -29,7 +29,7 @@ function* addPost(action) {
   catch(err) {
     yield put({
       type : ADD_POST_FAILURE,
-      data : err.response.data,
+      error : err.response.data,
     });
   }
 };
@@ -45,7 +45,7 @@ function* addComment(action) {
   catch(err) {
     yield put({
       type : ADD_COMMENT_FAILURE,
-      data : err.response.data,
+      error : err.response.data,
     });
   }
 };

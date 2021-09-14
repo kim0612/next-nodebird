@@ -38,7 +38,12 @@ const initialState = {
     }]
   }],
   imagePaths: [],
-  postAdded: false,
+  addPostLoading: false,
+  addPostDone: false,
+  addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
 };
 
 
@@ -57,6 +62,7 @@ export const addPostRequestAction = {
 };
 export const addCommentRequestAction = {
   type : ADD_POST_REQUEST,
+  // data에 postId 넘겨줘야함!!! 그래야 saga에서 axios문 해결가능
 };
 
 // reducer 생성 및 배포
@@ -66,31 +72,45 @@ const reducer = (state=initialState, action) => {
     case ADD_POST_REQUEST: 
       return {
         ...state,
-        mainPosts : [
-          dummyPost,
-          ...state.mainPosts
-        ]
+        addPostDone: false,
+        addPostError: null,
+        addPostLoading: true,
       };
     case ADD_POST_SUCCESS:
       return{
         ...state,
+        addPostLoading: false,
+        addPostDone: true,
+        mainPosts : [
+          dummyPost,
+          ...state.mainPosts
+        ],
       };
     case ADD_POST_FAILURE:
       return{
         ...state,
+        addPostLoading: false,
+        addPostError: action.error,
       };
     // ADD_COMENT
     case ADD_COMMENT_REQUEST:
       return {
         ...state,
+        addCommentDone: false,
+        addCommentError: null,
+        addCommentLoading: true,
       };
     case ADD_COMMENT_SUCCESS:
       return {
         ...state,
+        addCommentLoading: false,
+        addCommentDone: true,
       };
     case ADD_COMMENT_FAILURE:
       return {
         ...state,
+        addCommentLoading: false,
+        addCommentError: action.error,
       };
     // default
     default:
