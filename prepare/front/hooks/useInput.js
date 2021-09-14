@@ -6,7 +6,7 @@ function useInput(initialValue){
     setValue(e.target.value);
   },[]);
 
-  return [value, handler];
+  return [value, handler, setValue];
 }
 
 export default useInput;

@@ -61,7 +61,7 @@ export const addPostRequestAction = {
   type : ADD_POST_REQUEST,
 };
 export const addCommentRequestAction = {
-  type : ADD_POST_REQUEST,
+  type : ADD_COMMENT_REQUEST,
   // data에 postId 넘겨줘야함!!! 그래야 saga에서 axios문 해결가능
 };
 

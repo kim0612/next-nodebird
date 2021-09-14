@@ -9,14 +9,17 @@ import PostCardImage from "./PostCardImage";
 
 const PostCard = ({post}) => {
   const me = useSelector((state)=>state.user.me);
+
   const [heart,setHeart] = useState(false);
   const onToggleHeart = () => {
     setHeart((prev)=>!prev)
   };
+
   const [commentON, setCommentOn] = useState(false);
   const onToggleCommentOn = () => {
     setCommentOn((prev)=>!prev)
   }
+  
   const popOverContent2 = <>신고</>
   const popOverContent1 = <><div>수정</div><div>삭제</div></>;
   return(

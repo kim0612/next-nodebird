@@ -1,14 +1,28 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { List, Avatar, Divider, Form, Input, Button } from 'antd';
 
 import useInput from '../hooks/useInput';
+import { addCommentRequestAction } from '../reducers/post';
 
 const PostCardComment = ({post}) => {
-  const comments = post.Comments;
-  const [newComment, newCommentHandler] = useInput("");
+  const dispatch = useDispatch();
+
+  const [newComment, newCommentHandler, setNewComment] = useInput("");
+  
+  const { addCommentDone } = useSelector((state)=>state.post);
+  useEffect(()=>{
+    if(addCommentDone){
+      setNewComment('');
+    }
+  },[addCommentDone]);
+  
   const submitNewComment = useCallback(()=>{
     console.log(`게시물 id: ${post.id} / 새 댓글: ${newComment}`);
+    dispatch(addCommentRequestAction);
   }, [newComment])
+  
+  const comments = post.Comments;
   return(
     <div style={{margin:"0px 40px", padding:"10px", border: "1px solid #f0f0f0"}}>
       <Form

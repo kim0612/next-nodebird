@@ -1,23 +1,29 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { Button, Form, Input } from "antd"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addPostRequestAction } from "../reducers/post";
+import useInput from "../hooks/useInput";
 
 const PostForm = () => {
   const dispatch = useDispatch();
-  const[content, setContent] = useState("");
-  const contentHandler = useCallback((e) => {
-    setContent(e.target.value);
-  },[setContent]);
+
+  const [content, contentHandler, setContent] = useInput('');
+  
+  const { addPostDone } = useSelector((state)=>state.post);
+  useEffect(()=>{
+    if(addPostDone){
+      setContent('');
+    }
+  },[addPostDone]);
+
   const fileUpload = useRef();
   const fileUploadHandler = useCallback(()=>{
     fileUpload.current.click();
-  },[fileUpload.current])
+  },[fileUpload.current]);
+
   const submitHandler = useCallback(()=>{
-    console.log("submit!");
     dispatch(addPostRequestAction);
-    setContent("");
   },[]);
 
   return(
