@@ -15,6 +15,9 @@ const initialState = {
   me : null,
   signUpData : null,
   logInData : {},
+  changeNicknameLoading : false,
+  changeNicknameDone : false,
+  changeNicknameError : null,
 };
 
 // action type 변수명으로 정의
@@ -27,7 +30,9 @@ export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
 export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
-
+export const CHANGE_NICKNAME_REQUEST = "CHANGE_NICKNAME_REQUEST";
+export const CHANGE_NICKNAME_SUCCESS = "CHANGE_NICKNAME_SUCCESS";
+export const CHANGE_NICKNAME_FAILURE = "CHANGE_NICKNAME_FAILURE";
 
 //(action) or (action creator) 생성 및 배포
 export const loginRequestAction = (data) => {
@@ -35,16 +40,19 @@ export const loginRequestAction = (data) => {
     type : LOG_IN_REQUEST,
     data
   }
-}
+};
 export const logoutRequestAction = {
   type : LOG_OUT_REQUEST
-}
+};
 export const signupRequestAction = (data) => {
   return {
     type : SIGN_UP_REQUEST,
     data
   }
-}
+};
+export const changeNicknameRequestAction = {
+  type : CHANGE_NICKNAME_REQUEST,
+};
 
 
 //reducer 생성 및 배포
@@ -102,10 +110,29 @@ const reducer = (state = initialState, action) => {
         signUpData : action.data,
       };
     case SIGN_UP_FAILURE:
-      console.log(action.error);
       return{
         ...state,
         signupLoading : false,
+      };
+    // CHANGE_NICKNAME
+    case CHANGE_NICKNAME_REQUEST:
+      return{
+        ...state,
+        changeNicknameDone : false,
+        changeNicknameError : null,
+        changeNicknameLoading : true,
+      };
+    case CHANGE_NICKNAME_SUCCESS:
+      return{
+        ...state,
+        changeNicknameLoading : false,
+        changeNicknameDone : true,
+      };
+    case CHANGE_NICKNAME_FAILURE:
+      return{
+        ...state,
+        changeNicknameLoading : false,
+        changeNicknameError : action.error,
       };
     // default
     default:
