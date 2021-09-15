@@ -60,9 +60,11 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 export const addPostRequestAction = {
   type : ADD_POST_REQUEST,
 };
-export const addCommentRequestAction = {
-  type : ADD_COMMENT_REQUEST,
-  // data에 postId 넘겨줘야함!!! 그래야 saga에서 axios문 해결가능
+export const addCommentRequestAction = (data) => {
+  return{
+    type : ADD_COMMENT_REQUEST,
+    data, // data에 postId 넘겨줘야함!!! 그래야 saga에서 axios문 해결가능
+  }
 };
 
 // reducer 생성 및 배포
