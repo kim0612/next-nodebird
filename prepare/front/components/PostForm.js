@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import { Button, Form, Input } from "antd"
 import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from 'nanoid'; 
 
 import { addPostRequestAction } from "../reducers/post";
 import useInput from "../hooks/useInput";
@@ -26,7 +27,7 @@ const PostForm = () => {
   },[fileUpload.current]);
 
   const submitHandler = useCallback(()=>{
-    dispatch(addPostRequestAction({postId:2, content:content, meId:me.id, meNickname:me.nickname}));
+    dispatch(addPostRequestAction({postId:nanoid(), content:content, meId:me.id, meNickname:me.nickname}));
   },[content, me]);
 
   return(
