@@ -8,9 +8,12 @@ import useInput from "../hooks/useInput";
 const PostForm = () => {
   const dispatch = useDispatch();
 
+  const { me } = useSelector((state)=>state.user);
+
+  const { addPostLoading ,addPostDone } = useSelector((state)=>state.post);
+
   const [content, contentHandler, setContent] = useInput('');
   
-  const { addPostDone } = useSelector((state)=>state.post);
   useEffect(()=>{
     if(addPostDone){
       setContent('');
@@ -23,8 +26,8 @@ const PostForm = () => {
   },[fileUpload.current]);
 
   const submitHandler = useCallback(()=>{
-    dispatch(addPostRequestAction);
-  },[]);
+    dispatch(addPostRequestAction({postId:2, content:content, meId:me.id, meNickname:me.nickname}));
+  },[content, me]);
 
   return(
     <>
@@ -46,6 +49,7 @@ const PostForm = () => {
           type="primary" 
           htmlType="submit" 
           style={{float:"right"}}
+          loading={addPostLoading}
         >
           Dummy 업로드
         </Button>

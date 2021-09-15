@@ -1,13 +1,14 @@
-const dummyPost = {
-  id: 2,
-  content: '더미데이터입니다.',
+const dummyPost = (postId, content, meId, meNickname) => ({ 
+  id: postId,
+  content: content,
   User: {
-    id: 2,
-    nickname: 'KIM',
+    id: meId,
+    nickname: meNickname,
   },
   Images: [],
-  Comments: [],
-};
+  Comments: [], 
+});
+
 
 //state 초기화
 const initialState = {
@@ -57,9 +58,12 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
 
 // (action) or (action Creator) 생성 및 배포
-export const addPostRequestAction = {
-  type : ADD_POST_REQUEST,
-};
+export const addPostRequestAction = (data) => (
+  {
+    type : ADD_POST_REQUEST,
+    data,
+  }
+);
 export const addCommentRequestAction = (data) => {
   return{
     type : ADD_COMMENT_REQUEST,
@@ -84,8 +88,8 @@ const reducer = (state=initialState, action) => {
         addPostLoading: false,
         addPostDone: true,
         mainPosts : [
-          dummyPost,
-          ...state.mainPosts
+          dummyPost(action.data.postId, action.data.content, action.data.meId, action.data.meNickname),
+          ...state.mainPosts,
         ],
       };
     case ADD_POST_FAILURE:
