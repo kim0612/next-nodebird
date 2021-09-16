@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import PropTypes from 'prop-types';
-import { Card, Popover, Avatar } from 'antd';
+import { Card, Popover, Avatar, Button } from 'antd';
 import { RetweetOutlined, HeartOutlined, HeartTwoTone, CommentOutlined,EllipsisOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import PostCardComment from "./PostCardComment";
 import PostCardImage from "./PostCardImage";
+import { deletePostRequestAction } from "../reducers/post";
+
 
 const PostCard = ({post}) => {
   const me = useSelector((state)=>state.user.me);
+  const { deletePostLoading } = useSelector((state)=>state.post);
+  const dispatch = useDispatch();
+
+  const deleteHandler = useCallback(()=>{
+    dispatch(deletePostRequestAction(post.id));
+  },[post.id]);
 
   const [heart,setHeart] = useState(false);
   const onToggleHeart = () => {
@@ -19,9 +27,9 @@ const PostCard = ({post}) => {
   const onToggleCommentOn = () => {
     setCommentOn((prev)=>!prev)
   }
-  
-  const popOverContent2 = <>신고</>
-  const popOverContent1 = <><div>수정</div><div>삭제</div></>;
+
+  const popOverContent2 = <Button>신고</Button>
+  const popOverContent1 = <><Button>수정</Button><Button danger loading={deletePostLoading} onClick={deleteHandler}>삭제</Button></>
   return(
     <>
       <Card

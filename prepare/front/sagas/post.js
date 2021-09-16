@@ -2,13 +2,17 @@ import { all, fork, call, takeLatest, put, delay } from "redux-saga/effects";
 import axios from 'axios'
 
 import { 
-  ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, 
+  ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE,
+  DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE,
   ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE,
 } from '../reducers/post';
 
 
 // 실제로 API를 불러오는 함수 (실제로 서버와 통신, axios 사용)
 function addPostAPI(data) {
+  return axios.post('/api/post', data);
+};
+function deletePostAPI(data) {
   return axios.post('/api/post', data);
 };
 function addCommentAPI(data) {
@@ -31,6 +35,24 @@ function* addPost(action) {
     yield put({
       type : ADD_POST_FAILURE,
       error : err.response.data,
+    });
+  }
+};
+function* deletePost(action) {
+  try {
+    // const result = yield call(deletePostAPI, action.data);
+    yield delay(2000);
+    yield put({
+      type : DELETE_POST_SUCCESS,
+      // data : result.data,
+      targetPostId : action.targetPostId,
+    });
+  }
+  catch(err) {
+    yield put({
+      type : DELETE_POST_FAILURE,
+      // error : err.response.data,
+      error : err,
     });
   }
 };
@@ -58,6 +80,9 @@ function* addComment(action) {
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 };
+function* watchDeletePost() {
+  yield takeLatest(DELETE_POST_REQUEST, deletePost);
+}
 function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 };
@@ -67,6 +92,7 @@ function* watchAddComment() {
 export default function* postSaga() {
   yield all([
     fork(watchAddPost),
-    fork(watchAddComment)
+    fork(watchDeletePost),
+    fork(watchAddComment),
   ]);
 };
