@@ -41,12 +41,14 @@ function* addComment(action) {
     yield put({
       type : ADD_COMMENT_SUCCESS,
       // data : result.data,
+      data : action.data,
     });
   }
   catch(err) {
     yield put({
       type : ADD_COMMENT_FAILURE,
-      error : err.response.data,
+      // error : err.response.data,
+      error : err,
     });
   }
 };

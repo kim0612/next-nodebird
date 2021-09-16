@@ -9,6 +9,14 @@ const dummyPost = (postId, content, meId, meNickname) => ({
   Comments: [], 
 });
 
+const dummyComment = (meNickname, content) => {
+  return {
+    User : {
+      nickname : meNickname,
+    },
+    content : content,
+  };
+};
 
 //state 초기화
 const initialState = {
@@ -107,12 +115,23 @@ const reducer = (state=initialState, action) => {
         addCommentLoading: true,
       };
     case ADD_COMMENT_SUCCESS:
+      // action.data 요렇게생김! {postId:post.id, content:newComment, meNickname:me.nickname}
+      const newComment = dummyComment(action.data.meNickname, action.data.content);
+      const targetPostIndex = state.mainPosts.findIndex((item)=>{return(item.id === action.data.postId)});
+      let targetPost = state.mainPosts.find((item)=>{return(item.id === action.data.postId)});
+      let newComments = Array.from(targetPost.Comments);
+      let newMainPosts = Array.from(state.mainPosts);
+      newComments = [newComment, ...newComments];
+      targetPost = {...targetPost, Comments:newComments};
+      newMainPosts[targetPostIndex] = targetPost;
       return {
         ...state,
+        mainPosts : newMainPosts,
         addCommentLoading: false,
         addCommentDone: true,
       };
     case ADD_COMMENT_FAILURE:
+      console.log(action.error);
       return {
         ...state,
         addCommentLoading: false,
