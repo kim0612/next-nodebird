@@ -33,6 +33,8 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const CHANGE_NICKNAME_REQUEST = "CHANGE_NICKNAME_REQUEST";
 export const CHANGE_NICKNAME_SUCCESS = "CHANGE_NICKNAME_SUCCESS";
 export const CHANGE_NICKNAME_FAILURE = "CHANGE_NICKNAME_FAILURE";
+export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
+export const DELETE_POST_OF_ME = "DELETE_POST_OF_ME";
 
 //(action) or (action creator) 생성 및 배포
 export const loginRequestAction = (data) => {
@@ -134,6 +136,33 @@ const reducer = (state = initialState, action) => {
         changeNicknameLoading : false,
         changeNicknameError : action.error,
       };
+    // ADD_POST_TO_ME
+    case ADD_POST_TO_ME:
+      {
+        // action.data 이렇게 들어옴! {postId:nanoid(), content:content, meId:me.id, meNickname:me.nickname}
+        let newMePosts = Array.from(state.me.Posts);
+        newMePosts = [{ id:action.data.postId }, ...newMePosts];
+        return {
+          ...state,
+          me : {
+            ...state.me,
+            Posts : newMePosts,
+          },
+        };
+      }
+    // DELETE_POST_OF_ME
+    case DELETE_POST_OF_ME:
+      {
+        // action 이렇게 들어옴! { type:DELETE_POST_OF_ME, targetPostId:action.targetPostId }
+        let newMePosts = state.me.Posts.filter((item)=>{return(item.id !== action.targetPostId)});
+        return {
+          ...state,
+          me : {
+            ...state.me,
+            Posts : newMePosts,
+          },
+        };
+      }
     // default
     default:
       console.log("user reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");

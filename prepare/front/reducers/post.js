@@ -104,6 +104,7 @@ const reducer = (state=initialState, action) => {
         addPostLoading: true,
       };
     case ADD_POST_SUCCESS:
+      // action.data 이렇게 들어옴! {postId:nanoid(), content:content, meId:me.id, meNickname:me.nickname}
       return{
         ...state,
         addPostLoading: false,
@@ -114,6 +115,7 @@ const reducer = (state=initialState, action) => {
         ],
       };
     case ADD_POST_FAILURE:
+      console.log(action.error);
       return{
         ...state,
         addPostLoading: false,

@@ -7,6 +7,9 @@ import {
   ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE,
 } from '../reducers/post';
 
+import {
+  ADD_POST_TO_ME, DELETE_POST_OF_ME,
+} from '../reducers/user';
 
 // 실제로 API를 불러오는 함수 (실제로 서버와 통신, axios 사용)
 function addPostAPI(data) {
@@ -30,11 +33,17 @@ function* addPost(action) {
       // data : result.data,
       data : action.data,
     });
+    yield put({
+      type : ADD_POST_TO_ME,
+      // data : result.data,
+      data : action.data,
+    });
   }
   catch(err) {
     yield put({
       type : ADD_POST_FAILURE,
-      error : err.response.data,
+      // error : err.response.data,
+      error : err,
     });
   }
 };
@@ -44,6 +53,11 @@ function* deletePost(action) {
     yield delay(2000);
     yield put({
       type : DELETE_POST_SUCCESS,
+      // data : result.data,
+      targetPostId : action.targetPostId,
+    });
+    yield put({
+      type : DELETE_POST_OF_ME,
       // data : result.data,
       targetPostId : action.targetPostId,
     });
