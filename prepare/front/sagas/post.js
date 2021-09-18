@@ -13,7 +13,7 @@ function addPostAPI(data) {
   return axios.post('/api/post', data);
 };
 function deletePostAPI(data) {
-  return axios.post('/api/post', data);
+  return axios.dlelete('/api/post', data);
 };
 function addCommentAPI(data) {
   return axios.post(`/api/post/${data.postId}/comment`, data);

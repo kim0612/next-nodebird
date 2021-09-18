@@ -24,8 +24,8 @@ const initialState = {
     id: 1,
     content: '첫 번째 게시글',
     User: {
-      id: 1,
-      nickname: '제로초',
+      id: 1524,
+      nickname: 'BoogieCho',
     },
     Images: [{
       src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
@@ -130,7 +130,6 @@ const reducer = (state=initialState, action) => {
     case DELETE_POST_SUCCESS:
     {
       // action 이렇게 들어옴! { type:DELETE_POST_SUCCESS, targetPostId:action.targetPostId }
-      // let newMainPosts = Array.from(state.mainPosts);
       let newMainPosts = state.mainPosts.filter((item)=>{return(item.id!==action.targetPostId)});
       return {
         ...state,
