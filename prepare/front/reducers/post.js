@@ -1,4 +1,6 @@
 import produce from 'immer';
+import faker from 'faker';
+import { nanoid } from 'nanoid';
 
 const dummyPost = (postId, content, meId, meNickname) => ({ 
   id: postId,
@@ -60,6 +62,37 @@ const initialState = {
   addCommentError: null,
 };
 
+let fakerDummyPosts = Array(10).fill().map(()=>{
+  return(
+    {
+      id: nanoid(),
+      content: faker.lorem.paragraph(),
+      User: {
+        id: nanoid(),
+        nickname: faker.internet.userName(),
+      },
+      Images: [
+        {src: faker.image.image(),},
+        {src: faker.image.image(),},
+      ],
+      Comments: [
+        {
+          User: {
+            nickname: faker.internet.userName(),
+          },
+          content: faker.lorem.sentence(),
+        },
+        {
+          User: {
+            nickname: faker.internet.userName(),
+          },
+          content: faker.lorem.sentence(),
+        },
+      ],
+    }
+  );
+})
+initialState.mainPosts = initialState.mainPosts.concat(fakerDummyPosts);
 
 // action type 변수명으로 정의 및 배포
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
