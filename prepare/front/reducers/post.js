@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 const dummyPost = (postId, content, meId, meNickname) => ({ 
   id: postId,
   content: content,
@@ -94,95 +96,104 @@ export const addCommentRequestAction = (data) => {
 
 // reducer 생성 및 배포
 const reducer = (state=initialState, action) => {
-  switch(action.type){
-    // ADD_POST
-    case ADD_POST_REQUEST: 
-      return {
-        ...state,
-        addPostDone: false,
-        addPostError: null,
-        addPostLoading: true,
+  return produce(state, (draft)=>{
+    switch(action.type) {
+      // ADD_POST
+      case ADD_POST_REQUEST: {
+        draft.addPostDone = false;
+        draft.addPostError = null;
+        draft.addPostLoading = true;
+        break;
+      }
+      case ADD_POST_SUCCESS: {
+        // action.data 이렇게 들어옴! {postId:nanoid(), content:content, meId:me.id, meNickname:me.nickname}
+        draft.addPostLoading = false;
+        draft.addPostDone = true;
+        draft.mainPosts.unshift(dummyPost(action.data.postId, action.data.content, action.data.meId, action.data.meNickname));
+        // return{
+        //   ...state,
+        //   addPostLoading: false,
+        //   addPostDone: true,
+        //   mainPosts : [
+        //     dummyPost(action.data.postId, action.data.content, action.data.meId, action.data.meNickname),
+        //     ...state.mainPosts,
+        //   ],
+        // };
+        break;
+      }
+      case ADD_POST_FAILURE: {
+        console.log(action.error);
+        draft.addPostLoading = false;
+        draft.addPostError = action.error;
+        break;
+      }
+      // DELETE_POST
+      case DELETE_POST_REQUEST: {
+        draft.deletePostDone = false;
+        draft.deletePostError = null;
+        draft.deletePostLoading = true;
+        break;
+      }
+      case DELETE_POST_SUCCESS: {
+        // action 이렇게 들어옴! { type:DELETE_POST_SUCCESS, targetPostId:action.targetPostId }
+        draft.mainPosts = draft.mainPosts.filter((item)=>{return(item.id!==action.targetPostId)});
+        draft.deletePostLoading = false;
+        draft.deletePostDone = true;
+        // let newMainPosts = state.mainPosts.filter((item)=>{return(item.id!==action.targetPostId)});
+        // return {
+        //   ...state,
+        //   mainPosts: newMainPosts,
+        //   deletePostLoading: false,
+        //   deletePostDone: true,
+        // };
+        break;
       };
-    case ADD_POST_SUCCESS:
-      // action.data 이렇게 들어옴! {postId:nanoid(), content:content, meId:me.id, meNickname:me.nickname}
-      return{
-        ...state,
-        addPostLoading: false,
-        addPostDone: true,
-        mainPosts : [
-          dummyPost(action.data.postId, action.data.content, action.data.meId, action.data.meNickname),
-          ...state.mainPosts,
-        ],
+      case DELETE_POST_FAILURE: {
+        draft.deletePostLoading = false;
+        draft.deletePostError = action.error;
+        break;
+      }
+      // ADD_COMENT
+      case ADD_COMMENT_REQUEST: {
+        draft.addCommentDone = false;
+        draft.addCommentError = null;
+        draft.addCommentLoading = true;
+        break;
+      }
+      case ADD_COMMENT_SUCCESS: {
+        // action.data 요렇게생김! {postId:post.id, content:newComment, meNickname:me.nickname}
+        let targetPost = draft.mainPosts.find((item)=>{return(item.id === action.data.postId)});
+        targetPost.Comments.unshift(dummyComment(action.data.meNickname, action.data.content));
+        draft.addCommentLoading = false;
+        draft.addCommentDone = true;
+        break;
+        // const newComment = dummyComment(action.data.meNickname, action.data.content);
+        // const targetPostIndex = state.mainPosts.findIndex((item)=>{return(item.id === action.data.postId)});
+        // let targetPost = state.mainPosts.find((item)=>{return(item.id === action.data.postId)});
+        // let newComments = Array.from(targetPost.Comments);
+        // let newMainPosts = Array.from(state.mainPosts);
+        // newComments = [newComment, ...newComments];
+        // targetPost = {...targetPost, Comments:newComments};
+        // newMainPosts[targetPostIndex] = targetPost;
+        // return {
+        //   ...state,
+        //   mainPosts : newMainPosts,
+        //   addCommentLoading: false,
+        //   addCommentDone: true,
+        // };
       };
-    case ADD_POST_FAILURE:
-      console.log(action.error);
-      return{
-        ...state,
-        addPostLoading: false,
-        addPostError: action.error,
-      };
-    // DELETE_POST
-    case DELETE_POST_REQUEST: 
-      return {
-        ...state,
-        deletePostDone: false,
-        deletePostError: null,
-        deletePostLoading: true,
-      };
-    case DELETE_POST_SUCCESS:
-    {
-      // action 이렇게 들어옴! { type:DELETE_POST_SUCCESS, targetPostId:action.targetPostId }
-      let newMainPosts = state.mainPosts.filter((item)=>{return(item.id!==action.targetPostId)});
-      return {
-        ...state,
-        mainPosts: newMainPosts,
-        deletePostLoading: false,
-        deletePostDone: true,
-      };
-    };
-    case DELETE_POST_FAILURE:
-      return {
-        ...state,
-        deletePostLoading: false,
-        deletePostError: action.error,
-      };
-    // ADD_COMENT
-    case ADD_COMMENT_REQUEST:
-      return {
-        ...state,
-        addCommentDone: false,
-        addCommentError: null,
-        addCommentLoading: true,
-      };
-    case ADD_COMMENT_SUCCESS:
-    {
-      // action.data 요렇게생김! {postId:post.id, content:newComment, meNickname:me.nickname}
-      const newComment = dummyComment(action.data.meNickname, action.data.content);
-      const targetPostIndex = state.mainPosts.findIndex((item)=>{return(item.id === action.data.postId)});
-      let targetPost = state.mainPosts.find((item)=>{return(item.id === action.data.postId)});
-      let newComments = Array.from(targetPost.Comments);
-      let newMainPosts = Array.from(state.mainPosts);
-      newComments = [newComment, ...newComments];
-      targetPost = {...targetPost, Comments:newComments};
-      newMainPosts[targetPostIndex] = targetPost;
-      return {
-        ...state,
-        mainPosts : newMainPosts,
-        addCommentLoading: false,
-        addCommentDone: true,
-      };
-    };
-    case ADD_COMMENT_FAILURE:
-      console.log(action.error);
-      return {
-        ...state,
-        addCommentLoading: false,
-        addCommentError: action.error,
-      };
-    // default
-    default:
-      console.log("post reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
-      return state;
-  }
+      case ADD_COMMENT_FAILURE: {
+        console.log(action.error);
+        draft.addCommentLoading = false;
+        draft.addCommentError = action.error;
+        break;
+      }
+      // default
+      default: {
+        console.log("post reducer 초기화 or !!해당 액션이 reducer에 존재하지 않음!!");
+        break;
+      }
+    }
+  });
 }
 export default reducer;
